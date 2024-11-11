@@ -4,6 +4,8 @@ import dotenv from 'dotenv';
 import vendedorRoutes from './routes/vendedorRoutes';
 import productoRoutes from './routes/productoRoutes';
 import categoriaRoutes from './routes/categoriaRoutes';
+import usuarioRoutes from './routes/usuarioRoutes';
+import { setupSwagger } from './swaggerConfig';
 
 dotenv.config();
 
@@ -17,6 +19,9 @@ mongoose.connect(process.env.MONGODB_URI!)
 app.use('/api', vendedorRoutes);
 app.use('/api', productoRoutes);
 app.use('/api', categoriaRoutes);
+app.use('/api', usuarioRoutes);
+
+setupSwagger(app);
 
 if (process.env.NODE_ENV !== 'lambda') {
   const PORT = process.env.PORT || 3000;
