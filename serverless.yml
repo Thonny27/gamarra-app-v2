@@ -1,0 +1,18 @@
+service: gamarra-app
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  environment:
+    MONGODB_URI: ${env:MONGODB_URI}
+
+functions:
+  app:
+    handler: src/handler.handler
+    events:
+      - http:
+          path: /
+          method: any
+      - http:
+          path: /{proxy+}
+          method: any
