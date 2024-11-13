@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import * as vendedorController from '../controllers/vendedorController';
+import { authenticateToken } from '../middleware/authMiddleware';
 
 const router = Router();
 
@@ -18,7 +19,7 @@ const router = Router();
  *               items:
  *                 type: object
  */
-router.get('/vendedores', vendedorController.getAllVendedores);
+router.get('/vendedores', authenticateToken, vendedorController.getAllVendedores);
 
 /**
  * @swagger
@@ -52,10 +53,10 @@ router.get('/vendedores', vendedorController.getAllVendedores);
  *             schema:
  *               type: object
  */
-router.post('/vendedores', vendedorController.createVendedor);
-router.post('/vendedores/:vendedorId/tiendas/:tiendaId/productos', vendedorController.addProductoToTienda);
-router.put('/productos/:productoId', vendedorController.updateProducto);
-router.delete('/productos/:productoId', vendedorController.deleteProducto);
-router.post('/vendedores/:vendedorId/tiendas', vendedorController.addTiendaToVendedor);
+router.post('/vendedores', authenticateToken, vendedorController.createVendedor);
+router.post('/vendedores/:vendedorId/tiendas/:tiendaId/productos', authenticateToken, vendedorController.addProductoToTienda);
+router.put('/productos/:productoId', authenticateToken, vendedorController.updateProducto);
+router.delete('/productos/:productoId', authenticateToken, vendedorController.deleteProducto);
+router.post('/vendedores/:vendedorId/tiendas', authenticateToken, vendedorController.addTiendaToVendedor);
 
 export default router;
